@@ -1,0 +1,5 @@
+{
+  "serverPort" : 5000,
+  "dbConnect" : "mongodb+srv://admin:admin@cluster0.xgcmd.mongodb.net/advanced-auth?retryWrites=true&w=majority",
+  "secretKey" : "super-secret-password"
+}
