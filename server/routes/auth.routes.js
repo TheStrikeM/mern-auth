@@ -108,7 +108,7 @@ router.post(
                 }
             })
         } catch (e) {
-            throw new Error(`Error in login router - ${e}`)
+            throw new Error(`Error in auth router - ${e}`)
         }
     }
 )
