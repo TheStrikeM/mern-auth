@@ -25,7 +25,7 @@ export const registerUser = async (
             console.log("Вы успешно зарегистрировались!")
             alert(data.message)
         }).catch((reason => {
-            console.log(`Ошибка во время запроса - ${reason}`)
+            console.log(`Ошибка во время запроса регистрации - ${reason}`)
         }))
     } catch (e) {
         console.log('Error:', e)
@@ -45,7 +45,9 @@ export const loginUser = async (
             console.log("Вы успешно зашли\nДанные по вам")
             console.log(data)
             localStorage.setItem('token', data.token)
-        })
+        }).catch((reason => {
+            console.log(`Ошибка во время запроса логин - ${reason}`)
+        }))
     } catch (e) {
         console.log('Error:', e)
     }
