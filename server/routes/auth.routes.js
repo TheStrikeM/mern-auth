@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken")
 const config = require("config")
 
 const User = require("../models/User")
+const authMiddleware = require("../middlewares/auth.middleware")
 
 const router = new Router()
 
@@ -18,7 +19,6 @@ router.post(
         check("password", "Пароль должен быть не меньше 3 символов и не больше 20").isLength({min: 3, max: 20})
     ],
     async (req, res) => {
-
         try {
             const errors = validationResult(req)
             if(!errors.isEmpty()) {
@@ -59,7 +59,6 @@ router.post(
 router.post(
     '/login',
     async (req, res) => {
-
         try {
             const {username, password} = req.body
 
@@ -91,6 +90,28 @@ router.post(
     }
 )
 
+router.post(
+    '/auth',
+    authMiddleware,
+    async (req, res) => {
+        try {
+            const user = await User.findOne({_id: req.user.id})
+            const token = jwt.sign({id: user.id}, config.get('secretKey'), {expiresIn: '1h'})
+            return res.json({
+                token,
+                user: {
+                    id: user.id,
+                    email: user.email,
+                    diskSpace: user.diskSpace,
+                    usedSpace: user.usedSpace,
+                    avatar: user.avatar
+                }
+            })
+        } catch (e) {
+            throw new Error(`Error in login router - ${e}`)
+        }
+    }
+)
 
 
 module.exports = router
