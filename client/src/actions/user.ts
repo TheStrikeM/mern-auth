@@ -12,8 +12,7 @@ interface IRegisterProps extends IDefaultProps {
 }
 
 export const registerUser = async (
-    {username, email, password}: IRegisterProps,
-    dispatch: any
+    {username, email, password}: IRegisterProps
 ): Promise<void> => {
     try {
         const response = axios.post("http://127.0.0.1:5000/reg", {
@@ -21,7 +20,6 @@ export const registerUser = async (
             email,
             password
         }).then(({data}) => {
-            dispatch(setUser({username, email, password}))
             console.log("Вы успешно зарегистрировались!")
             alert(data.message)
         }).catch((reason => {
